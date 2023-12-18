@@ -9,3 +9,6 @@ local keymap = vim.keymap
 
 -- Vim REST Console
 keymap.set("n", "<leader>xr", ":call VrcQuery()<CR>") -- Run REST query
+
+-- Copy file path to cb
+keymap.set("n", "<leader>xc", "<Cmd>let @+=expand('%')<CR>", { silent = true })
