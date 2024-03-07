@@ -1,0 +1,8 @@
+*
+!.gitignore
+!karabiner/
+!nvim/
+!sketchybar/
+!skhd/
+!tmux/
+!yabai/
