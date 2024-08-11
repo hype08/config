@@ -1,80 +1,80 @@
-# === session defaults ===
-# lock screen immediately
-hyper - d : pmset displaysleepnow 
-# logout
-hyper - l : osascript -e 'tell app "System Events" to log out'
-# power down
-# cmd + shift - p : osascript -e 'tell app "System Events" to shut down'
-# reboot
-# cmd + shift - b : osascript -e 'tell app "System Events" to restart'
-# sleep
-# hyper - s : osascript -e 'tell application "System Events" to sleep'
-
-# open system preferences
-hyper - p : open "x-apple.systempreferences:"
-
-# === resize Mode ===
-# set resize border color 
-:: resize @ : yabai -m config active_window_border_color 0xFFFF00FF
-# toggle resize mode 
-# resize < hyper - r ; default
-# default < hyper - r ; resize
-# resize commands
-resize < left : yabai -m window --resize left:-50:0; \
-                  yabai -m window --resize right:-50:0
-resize < down : yabai -m window --resize bottom:0:50; \
-                  yabai -m window --resize top:0:50
-resize < up   : yabai -m window --resize top:0:-50; \
-                  yabai -m window --resize bottom:0:-50
-resize < right : yabai -m window --resize right:50:0; \
-                  yabai -m window --resize left:50:0
-
-# === modification ===
-# move window relatively
-cmd + shift - h : yabai -m window --warp west
-cmd + shift - j : yabai -m window --warp south
-cmd + shift - k : yabai -m window --warp north
-cmd + shift - l : yabai -m window --warp east
-
-# === navigation ===
-# change window focus within space
-alt - j : yabai -m window --focus south
-alt - k : yabai -m window --focus north
-alt - h : yabai -m window --focus west
-alt - l : yabai -m window --focus east
-# change focus between external displays (left and right)
-# alt - s: yabai -m display --focus west
-# alt - g: yabai -m display --focus east
-# rotate layout clockwise
-shift + alt - r : yabai -m space --rotate 270
-# flip along y-axis
-shift + alt - y : yabai -m space --mirror y-axis
-# flip along x-axis
-shift + alt - x : yabai -m space --mirror x-axis
-# make window native fullscreen
-hyper - f         : yabai -m window --toggle zoom-fullscreen
-shift + alt - f : yabai -m window --toggle native-fullscreen
-# toggle window float
-hyper - t : yabai -m window --toggle float --grid 16:32:4:2:24:12
-# balance out tree of windows (resize to occupy same area)
-hyper - e : yabai -m space --balance
-# resize windows
-hyper - a : yabai -m window --resize left:-50:0; \
-                  yabai -m window --resize right:-50:0
-hyper - z : yabai -m window --resize right:50:0; \
-                  yabai -m window --resize left:50:0
-# swap windows
-shift + alt - j : yabai -m window --swap south
-shift + alt - k : yabai -m window --swap north
-shift + alt - h : yabai -m window --swap west
-shift + alt - l : yabai -m window --swap east
-# move window to display left and right
-shift + alt - s : yabai -m window --display west; yabai -m display --focus west;
-shift + alt - g : yabai -m window --display east; yabai -m display --focus east;
-# move window to prev and next space
-shift + alt - p : yabai -m window --space prev;
-shift + alt - n : yabai -m window --space next;
-# move window to space #
-hyper - 1 : yabai -m window --space 1;
-hyper - 2 : yabai -m window --space 2;
-hyper - 3 : yabai -m window --space 3;
+# # === session defaults ===
+# # lock screen immediately
+# hyper - d : pmset displaysleepnow 
+# # logout
+# hyper - l : osascript -e 'tell app "System Events" to log out'
+# # power down
+# # cmd + shift - p : osascript -e 'tell app "System Events" to shut down'
+# # reboot
+# # cmd + shift - b : osascript -e 'tell app "System Events" to restart'
+# # sleep
+# # hyper - s : osascript -e 'tell application "System Events" to sleep'
+#
+# # open system preferences
+# hyper - p : open "x-apple.systempreferences:"
+#
+# # === resize Mode ===
+# # set resize border color 
+# :: resize @ : yabai -m config active_window_border_color 0xFFFF00FF
+# # toggle resize mode 
+# # resize < hyper - r ; default
+# # default < hyper - r ; resize
+# # resize commands
+# resize < left : yabai -m window --resize left:-50:0; \
+#                   yabai -m window --resize right:-50:0
+# resize < down : yabai -m window --resize bottom:0:50; \
+#                   yabai -m window --resize top:0:50
+# resize < up   : yabai -m window --resize top:0:-50; \
+#                   yabai -m window --resize bottom:0:-50
+# resize < right : yabai -m window --resize right:50:0; \
+#                   yabai -m window --resize left:50:0
+#
+# # === modification ===
+# # move window relatively
+# cmd + shift - h : yabai -m window --warp west
+# cmd + shift - j : yabai -m window --warp south
+# cmd + shift - k : yabai -m window --warp north
+# cmd + shift - l : yabai -m window --warp east
+#
+# # === navigation ===
+# # change window focus within space
+# alt - j : yabai -m window --focus south
+# alt - k : yabai -m window --focus north
+# alt - h : yabai -m window --focus west
+# alt - l : yabai -m window --focus east
+# # change focus between external displays (left and right)
+# # alt - s: yabai -m display --focus west
+# # alt - g: yabai -m display --focus east
+# # rotate layout clockwise
+# shift + alt - r : yabai -m space --rotate 270
+# # flip along y-axis
+# shift + alt - y : yabai -m space --mirror y-axis
+# # flip along x-axis
+# shift + alt - x : yabai -m space --mirror x-axis
+# # make window native fullscreen
+# hyper - f         : yabai -m window --toggle zoom-fullscreen
+# shift + alt - f : yabai -m window --toggle native-fullscreen
+# # toggle window float
+# hyper - t : yabai -m window --toggle float --grid 16:32:4:2:24:12
+# # balance out tree of windows (resize to occupy same area)
+# hyper - e : yabai -m space --balance
+# # resize windows
+# hyper - a : yabai -m window --resize left:-50:0; \
+#                   yabai -m window --resize right:-50:0
+# hyper - z : yabai -m window --resize right:50:0; \
+#                   yabai -m window --resize left:50:0
+# # swap windows
+# shift + alt - j : yabai -m window --swap south
+# shift + alt - k : yabai -m window --swap north
+# shift + alt - h : yabai -m window --swap west
+# shift + alt - l : yabai -m window --swap east
+# # move window to display left and right
+# shift + alt - s : yabai -m window --display west; yabai -m display --focus west;
+# shift + alt - g : yabai -m window --display east; yabai -m display --focus east;
+# # move window to prev and next space
+# shift + alt - p : yabai -m window --space prev;
+# shift + alt - n : yabai -m window --space next;
+# # move window to space #
+# hyper - 1 : yabai -m window --space 1;
+# hyper - 2 : yabai -m window --space 2;
+# hyper - 3 : yabai -m window --space 3;
