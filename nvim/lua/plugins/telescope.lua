@@ -22,11 +22,27 @@ return {
       end,
     })
 
+    local select_one_or_multi = function(prompt_bufnr)
+      local picker = require("telescope.actions.state").get_current_picker(prompt_bufnr)
+      local multi = picker:get_multi_selection()
+      if not vim.tbl_isempty(multi) then
+        require("telescope.actions").close(prompt_bufnr)
+        for _, j in pairs(multi) do
+          if j.path ~= nil then
+            vim.cmd(string.format("%s %s", "edit", j.path))
+          end
+        end
+      else
+        require("telescope.actions").select_default(prompt_bufnr)
+      end
+    end
+
     telescope.setup({
       defaults = {
         path_display = { "smart" },
         mappings = {
           i = {
+            ["<CR>"] = select_one_or_multi,
             ["<C-n>"] = actions.cycle_history_next,
             ["<C-p>"] = actions.cycle_history_prev,
             ["<C-k>"] = actions.move_selection_previous, -- move to prev result
@@ -42,7 +58,7 @@ return {
     -- set keymaps
     local keymap = vim.keymap -- for conciseness
 
-    keymap.set("n", "<leader>ff", function()
+    keymap.set("n", "<leader>fd", function()
       require("telescope.builtin").find_files({ cache_picker = false })
     end)
     keymap.set("n", "<leader>fr", "<cmd>Telescope oldfiles<cr>", { desc = "Fuzzy find recent files" })
