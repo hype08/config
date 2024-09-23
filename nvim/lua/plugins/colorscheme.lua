@@ -1,12 +1,12 @@
 return {
+  { "ntk148v/habamax.nvim" },
+  dependencies = {
+    "rktjmp/lush.nvim",
+  },
   {
-    "folke/tokyonight.nvim",
+    "LazyVim/LazyVim",
     opts = {
-      transparent = true,
-      styles = {
-        sidebars = "transparent",
-        floats = "transparent",
-      },
+      colorscheme = "habamax",
     },
   },
 }
