@@ -26,3 +26,5 @@ opt.clipboard:append("unnamedplus") -- use system clipboard as default register
 -- splits
 opt.splitright = true
 opt.splitbelow = true
+
+opt.hidden = true
