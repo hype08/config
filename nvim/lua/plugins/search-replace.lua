@@ -8,7 +8,7 @@ return {
     end, { desc = "GrugFar Search with current word" })
 
     keymap.set("n", "<leader>srf", function()
-      require("grug-far").with_visual_selection({ prefills = { paths = vim.fn.expand("%") } })
+      require("grug-far").open({ prefills = { paths = vim.fn.expand("%") } })
     end, { desc = "GrugFar Search limited to current file" })
   end,
 }
