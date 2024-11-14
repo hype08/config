@@ -34,7 +34,7 @@ return {
             icon_hl = "@variable",
             desc = "Files",
             group = "Label",
-            action = "Telescope find_files",
+            action = "Telescope oldfiles cwd_only=true",
             key = "f",
           },
           {
