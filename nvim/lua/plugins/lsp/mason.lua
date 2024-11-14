@@ -31,7 +31,6 @@ return {
         "html",
         "lua_ls",
         "solargraph",
-        "tsserver",
       },
     })
 
