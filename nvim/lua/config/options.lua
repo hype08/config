@@ -28,3 +28,5 @@ opt.splitright = true
 opt.splitbelow = true
 
 opt.hidden = true
+
+opt.colorcolumn = ""
