@@ -27,6 +27,11 @@ opt.clipboard:append("unnamedplus") -- use system clipboard as default register
 opt.splitright = true
 opt.splitbelow = true
 
-opt.hidden = true
+-- set split separator color
+vim.api.nvim_create_autocmd("ColorScheme", {
+  callback = function()
+    vim.api.nvim_set_hl(0, "WinSeparator", { fg = "#1c1c1c" })
+  end,
+})
 
-opt.colorcolumn = ""
+opt.hidden = true
