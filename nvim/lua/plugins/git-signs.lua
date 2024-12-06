@@ -2,10 +2,9 @@ return {
   "lewis6991/gitsigns.nvim",
   event = { "BufReadPre", "BufNewFile" },
   opts = {
+    current_line_blame = true,
     on_attach = function(bufnr)
       local gs = package.loaded.gitsigns
-
-      gs.toggle_current_line_blame()
 
       local function map(mode, l, r, desc)
         vim.keymap.set(mode, l, r, { buffer = bufnr, desc = desc })

@@ -3,7 +3,7 @@ return {
   config = function()
     require("grug-far").setup({})
     local keymap = vim.keymap
-    keymap.set("n", "<leader>srg", function()
+    keymap.set("n", "<leader>sr", function()
       require("grug-far").open({ prefills = { search = vim.fn.expand("<cword>") } })
     end, { desc = "GrugFar Search with current word" })
 
