@@ -92,9 +92,7 @@ return {
       },
     },
     config = function(_, opts)
-      require("lazyvim.util").lsp.on_attach(function(client, buffer)
-        -- Custom on_attach logic if needed
-      end)
+      require("lazyvim.util").lsp.on_attach(function(client, buffer) end)
 
       require("lspconfig").tsserver.setup(opts.servers.tsserver)
     end,
@@ -135,12 +133,51 @@ return {
     end,
   },
 
+  -- Go Configuration
+  {
+    "neovim/nvim-lspconfig",
+    opts = {
+      servers = {
+        gopls = {
+          settings = {
+            gopls = {
+              analyses = {
+                unusedparams = true,
+              },
+              staticcheck = true,
+              gofumpt = true,
+              usePlaceholders = true,
+              hints = {
+                assignVariableTypes = true,
+                compositeLiteralFields = true,
+                compositeLiteralTypes = true,
+                constantValues = true,
+                functionTypeParameters = true,
+                parameterNames = true,
+                rangeVariableTypes = true,
+              },
+            },
+          },
+        },
+      },
+    },
+    config = function(_, opts)
+      require("lazyvim.util").lsp.on_attach(function(client, buffer) end)
+
+      require("lspconfig").gopls.setup(opts.servers.gopls)
+    end,
+  },
+
   {
     "williamboman/mason.nvim",
     opts = {
       ensure_installed = {
         "solargraph",
         "typescript-language-server",
+        "gopls",
+        "golangci-lint", -- Go linter
+        "gofumpt", -- Go formatter
+        "delve", -- Go debugger
       },
     },
   },
