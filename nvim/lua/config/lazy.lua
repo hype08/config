@@ -20,6 +20,7 @@ require("lazy").setup({
     -- import/override with your plugins
     { import = "plugins" },
     { import = "plugins.lsp" },
+    { import = "lazyvim.plugins.extras.test.core" },
     {
       "nvim-neo-tree/neo-tree.nvim",
       enabled = false,
