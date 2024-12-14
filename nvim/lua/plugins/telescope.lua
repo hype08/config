@@ -15,7 +15,12 @@ return {
     local trouble = require("trouble")
     local trouble_telescope = require("trouble.providers.telescope")
 
-    -- or create your custom action
+    -- Custom action to combine toggle_selection and move_selection_previous
+    local select_and_move_up = function(prompt_bufnr)
+      actions.toggle_selection(prompt_bufnr)
+      actions.move_selection_previous(prompt_bufnr)
+    end
+
     local custom_actions = transform_mod({
       open_trouble_qflist = function(prompt_bufnr)
         trouble.toggle("quickfix")
@@ -39,6 +44,10 @@ return {
 
     telescope.setup({
       defaults = {
+        sorting_strategy = "descending",
+        layout_config = {
+          prompt_position = "bottom",
+        },
         path_display = { "smart" },
         mappings = {
           i = {
@@ -48,6 +57,7 @@ return {
             ["<C-k>"] = actions.move_selection_previous, -- move to prev result
             ["<C-j>"] = actions.move_selection_next, -- move to next result
             ["<C-q>"] = actions.send_selected_to_qflist + custom_actions.open_trouble_qflist,
+            ["<Tab>"] = select_and_move_up, -- Toggle selection and move up
           },
         },
       },
@@ -67,5 +77,12 @@ return {
     keymap.set("n", "<leader>fw", function()
       require("telescope.builtin").live_grep({ cache_picker = false })
     end, { desc = "Find word in cwd" })
+
+    -- Add fast git files search with multi-select
+    keymap.set("n", "<leader>ff", function()
+      require("telescope.builtin").git_files({
+        cache_picker = false,
+      })
+    end, { desc = "Find git files (with multi-select)" })
   end,
 }
