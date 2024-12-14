@@ -3,10 +3,6 @@
 -- Add any additional options here
 
 local opt = vim.opt
--- Disable netrw for oil.nvim
-vim.g.loaded_netrw = 1
-vim.g.loaded_netrwPlugin = 1
-
 opt.relativenumber = true
 opt.number = true
 
@@ -38,6 +34,7 @@ vim.api.nvim_create_autocmd("ColorScheme", {
 })
 
 opt.hidden = true
--- Add some general UI improvements
+
 vim.opt.mousemoveevent = true
 vim.opt.cursorline = true
+
