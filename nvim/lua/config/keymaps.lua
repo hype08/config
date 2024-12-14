@@ -8,7 +8,7 @@ vim.g.mapleader = " "
 local keymap = vim.keymap
 
 -- Copy file path to cb
-keymap.set("n", "<leader>xc", "<Cmd>let @+=expand('%:~:.')<CR>", { silent = true })
+keymap.set("n", "<leader>xc", "<Cmd>let @+=expand('%:~:.')<CR>", { silent = true, desc = "Copy current file path to clipboard" })
 
 -- Splits
 keymap.set("n", "<leader>sv", "<C-w>v", { desc = "Split window vertically" })

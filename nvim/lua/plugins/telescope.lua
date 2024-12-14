@@ -60,12 +60,12 @@ return {
 
     keymap.set("n", "<leader>fd", function()
       require("telescope.builtin").find_files({ cache_picker = false })
-    end)
+    end, { desc = "Find files in cwd" })
     keymap.set("n", "<leader>fr", "<cmd>Telescope oldfiles cwd_only=true<cr>", { desc = "Fuzzy find recent files" })
     -- keymap.set("n", "<leader>fs", "<cmd>Telescope live_grep<cr>", { desc = "Find string in cwd" })
     keymap.set("n", "<leader>fa", "<cmd>Telescope grep_string<cr>", { desc = "Find string under cursor in cwd" })
     keymap.set("n", "<leader>fw", function()
       require("telescope.builtin").live_grep({ cache_picker = false })
-    end)
+    end, { desc = "Find word in cwd" })
   end,
 }
