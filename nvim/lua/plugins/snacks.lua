@@ -43,6 +43,12 @@ return {
       enabled = true,
       timeout = 3000,
     },
+    profiler = {
+      enabled = true,
+      notify = true, -- Show notification when enabling/disabling profiling
+      notify_times = true, -- Show notification with profiling times on exit
+      sort_by = "self", -- "name", "total", "self", "median", or "count"
+    },
     quickfile = { enabled = true },
     statuscolumn = { enabled = true },
     words = { enabled = true },
@@ -138,6 +144,20 @@ return {
       end,
       desc = "Prev Reference",
       mode = { "n", "t" },
+    },
+    {
+      "<leader>up",
+      function()
+        Snacks.profiler.toggle()
+      end,
+      desc = "Toggle Profiling",
+    },
+    {
+      "<leader>uP",
+      function()
+        Snacks.profiler.show()
+      end,
+      desc = "Show Profile",
     },
     {
       "<leader>N",
