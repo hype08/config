@@ -1,5 +1,6 @@
 return {
   "ledger/vim-ledger",
+  ft = { "ledger" },
   config = function()
     vim.g.ledger_maxwidth = 80
     vim.g.ledger_fillstring = "    -"
