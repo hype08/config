@@ -17,6 +17,18 @@ return {
 
     local keymap = vim.keymap -- for conciseness
 
+    -- Yank current diagnostic
+    local function yank_diagnostic()
+      local diagnostics = vim.diagnostic.get(0, { cursor_position = vim.api.nvim_win_get_cursor(0) })
+      if #diagnostics > 0 then
+        local message = diagnostics[1].message
+        vim.fn.setreg("+", message) -- Copy to system clipboard
+        vim.notify("Diagnostic copied to clipboard", vim.log.levels.INFO)
+      else
+        vim.notify("No diagnostic at cursor position", vim.log.levels.WARN)
+      end
+    end
+
     vim.api.nvim_create_autocmd("LspAttach", {
       group = vim.api.nvim_create_augroup("UserLspConfig", {}),
       callback = function(ev)
@@ -63,6 +75,9 @@ return {
 
         opts.desc = "Restart LSP"
         keymap.set("n", "<leader>rs", ":LspRestart<CR>", opts) -- mapping to restart lsp if necessary
+
+        opts.desc = "Yank diagnostic message"
+        keymap.set("n", "<leader>yd", yank_diagnostic, opts) -- yank diagnostic message to clipboard
       end,
     })
 
@@ -70,7 +85,6 @@ return {
     local capabilities = cmp_nvim_lsp.default_capabilities()
 
     -- Change the Diagnostic symbols in the sign column (gutter)
-    -- (not in youtube nvim video)
     local signs = { Error = " ", Warn = " ", Hint = "󰠠 ", Info = " " }
     for type, icon in pairs(signs) do
       local hl = "DiagnosticSign" .. type
