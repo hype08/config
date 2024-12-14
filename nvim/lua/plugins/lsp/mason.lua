@@ -31,6 +31,7 @@ return {
         "html",
         "lua_ls",
         "solargraph",
+        "rust_analyzer",  -- Added rust-analyzer
       },
     })
 
@@ -42,6 +43,7 @@ return {
         "rubocop",
         "rubyfmt",
         "stylua", -- lua formatter
+        "rustfmt",  -- Added Rust formatter
       },
     })
   end,
