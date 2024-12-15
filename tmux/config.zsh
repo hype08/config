@@ -19,7 +19,5 @@ function ts {
   fi
 }
 
-# later
-alias later='tmux new-session -A -s later'
 # config
-alias config='tmux new-session -A -s config'
+alias hype='tmux new-session -A -s hype'
