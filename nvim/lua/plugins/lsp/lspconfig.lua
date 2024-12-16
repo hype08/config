@@ -50,13 +50,18 @@ return {
         keymap.set("n", "gi", "<cmd>Telescope lsp_implementations<CR>", opts) -- show lsp implementations
 
         opts.desc = "Show LSP type definitions"
-        -- keymap.set("n", "gt", "<cmd>Telescope lsp_type_definitions<CR>", opts) -- show lsp type definitions
-        -- vsplit
         keymap.set("n", "gt", function()
-          require("telescope.builtin").lsp_type_definitions({
-            initial_mode = "normal",
-            jump_type = "vsplit",
-          })
+          local params = vim.lsp.util.make_position_params()
+          vim.lsp.buf_request(0, "textDocument/typeDefinition", params, function(_, result)
+            if result and result[1] then
+              -- Move current buffer to the right
+              vim.cmd("rightbelow vsplit")
+              -- Return to left window
+              vim.cmd("wincmd h")
+              -- Jump to type definition
+              vim.lsp.buf.type_definition()
+            end
+          end)
         end, opts)
 
         opts.desc = "See available code actions"
@@ -92,7 +97,7 @@ return {
     local capabilities = cmp_nvim_lsp.default_capabilities()
 
     -- Change the Diagnostic symbols in the sign column (gutter)
-    local signs = { Error = " ", Warn = " ", Hint = "󰠠 ", Info = " " }
+    local signs = { Error = " ", Warn = " ", Hint = "󰠠 ", Info = " " }
     for type, icon in pairs(signs) do
       local hl = "DiagnosticSign" .. type
       vim.fn.sign_define(hl, { text = icon, texthl = hl, numhl = "" })
@@ -142,3 +147,4 @@ return {
     })
   end,
 }
+
