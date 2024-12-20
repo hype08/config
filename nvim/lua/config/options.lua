@@ -38,3 +38,5 @@ opt.hidden = true
 vim.opt.mousemoveevent = true
 vim.opt.cursorline = true
 
+vim.opt.fixendofline = false
+vim.opt.endofline = false
