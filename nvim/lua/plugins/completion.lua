@@ -92,6 +92,9 @@ return {
       },
     },
     config = function(_, opts)
+      local capabilities = require("blink.cmp").get_lsp_capabilities()
+      require("lspconfig").lua_ls.setup({ capabilites = capabilities })
+
       require("lazyvim.util").lsp.on_attach(function(client, buffer) end)
 
       require("lspconfig").tsserver.setup(opts.servers.tsserver)
@@ -127,6 +130,9 @@ return {
       },
     },
     config = function(_, opts)
+      local capabilities = require("blink.cmp").get_lsp_capabilities()
+      require("lspconfig").lua_ls.setup({ capabilites = capabilities })
+
       require("lazyvim.util").lsp.on_attach(function(client, buffer) end)
 
       require("lspconfig").solargraph.setup(opts.servers.solargraph)
