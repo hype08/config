@@ -8,7 +8,12 @@ vim.g.mapleader = " "
 local keymap = vim.keymap
 
 -- Copy file path to cb
-keymap.set("n", "<leader>xc", "<Cmd>let @+=expand('%:~:.')<CR>", { silent = true, desc = "Copy current file path to clipboard" })
+keymap.set(
+  "n",
+  "<leader>xc",
+  "<Cmd>let @+=expand('%:~:.')<CR>",
+  { silent = true, desc = "Copy current file path to clipboard" }
+)
 
 -- Splits
 keymap.set("n", "<leader>sv", "<C-w>v", { desc = "Split window vertically" })
@@ -61,3 +66,6 @@ keymap.set("n", "<C-c>", "ciw", { desc = "Change word" })
 keymap.set("v", "J", ":m '>+1<CR>gv=gv", { desc = "Move selected up" }) -- thanks Prime
 keymap.set("v", "K", ":m '<-2<CR>gv=gv", { desc = "Move selected down" })
 -- keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>", { desc = "Clear search" })
+
+-- Buffers
+keymap.set("n", "<leader>wq", "<cmd>w<CR><cmd>bd<CR>", { desc = "Save and close buffer" })
