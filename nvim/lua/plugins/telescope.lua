@@ -84,5 +84,6 @@ return {
         cache_picker = false,
       })
     end, { desc = "Find git files (with multi-select)" })
+    require("config.telescope.live_multigrep").setup()
   end,
 }
