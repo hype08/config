@@ -4,7 +4,8 @@ return {
     require("lspsaga").setup({
       outline = {
         auto_preview = false,
-        win_position = "right",
+        win_position = "left",
+        close_after_jump = true,
       },
     })
     local keymap = vim.keymap
@@ -20,7 +21,7 @@ return {
     )
   end,
   dependencies = {
-    "nvim-treesitter/nvim-treesitter", -- optional
-    "nvim-tree/nvim-web-devicons", -- optional
+    "nvim-treesitter/nvim-treesitter",
+    "nvim-tree/nvim-web-devicons",
   },
 }
