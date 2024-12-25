@@ -85,7 +85,7 @@ return {
     vim.keymap.set("n", "-", require("oil").open, { desc = "Open parent directory" })
 
     -- Vertical split (file tree style)
-    vim.keymap.set("n", "<leader>e", function()
+    vim.keymap.set("n", "<leader>E", function()
       local oil = require("oil")
       -- Open in vertical split
       vim.cmd("vsplit")
@@ -97,7 +97,7 @@ return {
     end, { desc = "Open oil in vertical split" })
 
     -- Floating window
-    vim.keymap.set("n", "<leader>E", function()
+    vim.keymap.set("n", "<leader>e", function()
       require("oil").open_float()
     end, { desc = "Open oil in floating window" })
 
