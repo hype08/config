@@ -78,3 +78,7 @@ keymap.set("v", "K", ":m '<-2<CR>gv=gv", { desc = "Move selected down" })
 
 -- Buffers
 keymap.set("n", "<leader>wq", "<cmd>w<CR><cmd>bd<CR>", { desc = "Save and close buffer" })
+
+-- Yank entire buffer
+keymap.set("n", "<leader>ya", "<cmd>%y+<CR>", { silent = true, desc = "Yank entire buffer to system clipboard" })
+keymap.set("n", "<leader>yA", "<cmd>%y<CR>", { silent = true, desc = "Yank entire buffer to unnamed register" })
