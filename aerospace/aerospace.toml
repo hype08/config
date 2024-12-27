@@ -179,7 +179,7 @@ if.app-id = 'io.httpie.desktop'
 run = "move-node-to-workspace 8"
 
 [[on-window-detected]]
-if.app-id = 'com.github.wez.wezterm'
+if.app-id = 'com.mitchellh.ghostty'
 run = "move-node-to-workspace T"
 
 [[on-window-detected]]
