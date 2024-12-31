@@ -7,6 +7,7 @@ M.config = {
     "%.stversions",
     "%.git",
     "%.obsidian",
+    ".*idx_",
   },
 }
 
