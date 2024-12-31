@@ -7,6 +7,14 @@ vim.g.mapleader = " "
 
 local keymap = vim.keymap
 
+-- Paste and move cursor to end of pasted text
+keymap.set({ "n", "v" }, "p", "p`]", { noremap = true, desc = "Paste and move cursor to end" })
+keymap.set({ "n", "v" }, "P", "P`]", { noremap = true, desc = "Paste before and move cursor to end" })
+
+-- Yank and keep cursor position
+keymap.set({ "n", "v" }, "y", "y`]", { noremap = true, desc = "Yank and keep cursor position" })
+keymap.set({ "n", "v" }, "Y", "Y`]", { noremap = true, desc = "Yank line and keep cursor position" })
+
 -- Copy file path to cb
 keymap.set(
   "n",
