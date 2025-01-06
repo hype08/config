@@ -56,9 +56,12 @@ return {
             ["<C-k>"] = actions.move_selection_previous,
             ["<C-j>"] = actions.move_selection_next,
             ["<C-q>"] = actions.send_selected_to_qflist + custom_actions.open_trouble_qflist,
-            ["<Tab>"] = select_and_move_up,
           },
         },
+        attach_mappings = function(prompt_bufnr, map)
+          map("i", "<Tab>", select_and_move_up)
+          return true
+        end,
       },
     })
 
