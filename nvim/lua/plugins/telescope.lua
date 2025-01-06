@@ -15,7 +15,6 @@ return {
     local trouble = require("trouble")
     local trouble_telescope = require("trouble.providers.telescope")
 
-    -- Custom action to combine toggle_selection and move_selection_previous
     local select_and_move_up = function(prompt_bufnr)
       actions.toggle_selection(prompt_bufnr)
       actions.move_selection_previous(prompt_bufnr)
@@ -54,10 +53,10 @@ return {
             ["<CR>"] = select_one_or_multi,
             ["<C-n>"] = actions.cycle_history_next,
             ["<C-p>"] = actions.cycle_history_prev,
-            ["<C-k>"] = actions.move_selection_previous, -- move to prev result
-            ["<C-j>"] = actions.move_selection_next, -- move to next result
+            ["<C-k>"] = actions.move_selection_previous,
+            ["<C-j>"] = actions.move_selection_next,
             ["<C-q>"] = actions.send_selected_to_qflist + custom_actions.open_trouble_qflist,
-            ["<Tab>"] = select_and_move_up, -- Toggle selection and move up
+            ["<Tab>"] = select_and_move_up,
           },
         },
       },
@@ -65,8 +64,7 @@ return {
 
     telescope.load_extension("fzf")
 
-    -- set keymaps
-    local keymap = vim.keymap -- for conciseness
+    local keymap = vim.keymap
 
     keymap.set("n", "<leader>fd", function()
       require("telescope.builtin").find_files({ cache_picker = false })
@@ -78,7 +76,6 @@ return {
       require("telescope.builtin").live_grep({ cache_picker = false })
     end, { desc = "Find word in cwd" })
 
-    -- Add fast git files search with multi-select
     keymap.set("n", "<leader>ff", function()
       require("telescope.builtin").git_files({
         cache_picker = false,
