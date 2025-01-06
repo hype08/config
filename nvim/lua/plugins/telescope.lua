@@ -11,6 +11,7 @@ return {
     local telescope = require("telescope")
     local actions = require("telescope.actions")
     local transform_mod = require("telescope.actions.mt").transform_mod
+    local action_state = require("telescope.actions.state")
 
     local trouble = require("trouble")
     local trouble_telescope = require("trouble.providers.telescope")
@@ -63,6 +64,19 @@ return {
           return true
         end,
       },
+      pickers = {
+        git_files = {
+          mappings = {
+            i = {
+              ["<Tab>"] = select_and_move_up,
+            },
+          },
+          attach_mappings = function(prompt_bufnr, map)
+            map("i", "<Tab>", select_and_move_up)
+            return true
+          end,
+        },
+      },
     })
 
     telescope.load_extension("fzf")
@@ -79,11 +93,19 @@ return {
       require("telescope.builtin").live_grep({ cache_picker = false })
     end, { desc = "Find word in cwd" })
 
+    -- Modified to have both ff and fg for git files
     keymap.set("n", "<leader>ff", function()
       require("telescope.builtin").git_files({
         cache_picker = false,
       })
     end, { desc = "Find git files (with multi-select)" })
+
+    keymap.set("n", "<leader>fg", function()
+      require("telescope.builtin").git_files({
+        cache_picker = false,
+      })
+    end, { desc = "Find git files (with multi-select)" })
+
     require("config.telescope.live_multigrep").setup()
   end,
 }
