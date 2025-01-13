@@ -19,7 +19,7 @@ keymap.set({ "n", "v" }, "Y", "Y`]", { noremap = true, desc = "Yank line and kee
 keymap.set(
   "n",
   "<leader>xc",
-  "<Cmd>let @+=expand('%:~:.')<CR>",
+  "<Cmd>let @+=expand('%:~:.')<CR><Cmd>lua vim.notify('File path copied to clipboard')<CR>",
   { silent = true, desc = "Copy current file path to clipboard" }
 )
 
