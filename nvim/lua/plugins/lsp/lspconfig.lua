@@ -51,17 +51,11 @@ return {
 
         opts.desc = "Show LSP type definitions"
         keymap.set("n", "gt", function()
-          local params = vim.lsp.util.make_position_params()
-          vim.lsp.buf_request(0, "textDocument/typeDefinition", params, function(_, result)
-            if result and result[1] then
-              -- Move current buffer to the right
-              vim.cmd("rightbelow vsplit")
-              -- Return to left window
-              vim.cmd("wincmd h")
-              -- Jump to type definition
-              vim.lsp.buf.type_definition()
-            end
-          end)
+          vim.cmd("leftabove vsplit")
+
+          vim.lsp.buf.type_definition({
+            reuse_win = true,
+          })
         end, opts)
 
         opts.desc = "See available code actions"
@@ -147,4 +141,3 @@ return {
     })
   end,
 }
-

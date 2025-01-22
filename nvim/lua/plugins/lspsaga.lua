@@ -3,14 +3,14 @@ return {
   config = function()
     require("lspsaga").setup({
       outline = {
-        auto_preview = false,
+        auto_preview = true,
         win_position = "left",
         close_after_jump = true,
       },
     })
     local keymap = vim.keymap
     keymap.set("n", "<C-x>", "<Cmd>Lspsaga outline<CR>", { noremap = true, silent = true })
-    keymap.set("n", "<C-i>", "<Cmd>Lspsaga peek_definition<CR>", { noremap = true, silent = true })
+    -- keymap.set("n", "<C-i>", "<Cmd>Lspsaga peek_definition<CR>", { noremap = true, silent = true })
     keymap.set("n", "<C-t>", "<Cmd>Lspsaga peek_type_definition<CR>", { noremap = true, silent = true })
     keymap.set("n", "<C-a>", "<Cmd>Lspsaga finder<CR>", { noremap = true, silent = true })
     keymap.set(
