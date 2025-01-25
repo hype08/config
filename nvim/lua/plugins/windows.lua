@@ -33,4 +33,3 @@ return {
     end, { desc = "Maximize current window" })
   end,
 }
-

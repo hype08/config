@@ -1,6 +1,4 @@
 return {
-  -- {{{ Define the Harpoon lazy.vim specificaiton.
-
   "ThePrimeagen/harpoon",
   enabled = true,
   branch = "harpoon2",

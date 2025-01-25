@@ -3,17 +3,14 @@ return {
   event = "VeryLazy",
   opts = {
     options = {
-      -- Disable file type icon for better performance
       icons_enabled = false,
       theme = "auto",
       component_separators = { left = "", right = "" },
       section_separators = { left = "", right = "" },
-      -- Disable on specific filetypes
       disabled_filetypes = {
         statusline = { "dashboard", "alpha", "starter" },
         winbar = {},
       },
-      -- Refresh less frequently
       refresh = {
         statusline = 1000,
         tabline = 1000,
@@ -23,7 +20,12 @@ return {
     sections = {
       lualine_a = { "mode" },
       lualine_b = {
-        { "branch", cond = function() return vim.fn.exists("*FugitiveHead") == 1 end },
+        {
+          "branch",
+          cond = function()
+            return vim.fn.exists("*FugitiveHead") == 1
+          end,
+        },
       },
       lualine_c = {
         {
@@ -33,7 +35,6 @@ return {
         },
         { "filename", path = 1 },
       },
-      -- Empty right sections for better performance
       lualine_x = {},
       lualine_y = {
         { "filetype", colored = false },
@@ -49,17 +50,13 @@ return {
     },
   },
   config = function(_, opts)
-    -- Load lualine with custom config
     require("lualine").setup(opts)
 
-    -- Disable some built-in status modules
     vim.g.loaded_lualine_git = 0
     vim.g.loaded_lualine_treesitter = 0
 
-    -- Reduce status updates
     vim.opt.updatetime = 1000
 
-    -- Cache filetype lookups
     local filetype_cache = {}
     vim.api.nvim_create_autocmd("FileType", {
       callback = function(ev)

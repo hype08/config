@@ -1,12 +1,10 @@
 return {
   "epwalsh/obsidian.nvim",
-  event = { "BufReadPre", "BufNewFile" },
   version = "*",
   lazy = true,
   ft = "markdown",
-  dependencies = {
-    "nvim-lua/plenary.nvim",
-  },
+  event = { "BufReadPre", "BufNewFile" },
+  dependencies = { "nvim-lua/plenary.nvim" },
   keys = {
     { "<leader>oo", "<cmd>ObsidianOpen<cr>", desc = "Open in Obsidian" },
     { "<leader>oq", "<cmd>ObsidianQuickSwitch<cr>", desc = "Quick switch note" },
@@ -61,11 +59,10 @@ return {
       time_format = "%H:%M",
     },
     note_id_func = function(title)
-      local timestamp = os.date("%Y-%m-%d %H%M")
       if title then
-        return timestamp .. " " .. title:gsub(" ", "-"):gsub("[^A-Za-z0-9-]", ""):lower()
+        return title
       end
-      return timestamp
+      return vim.fn.input("Title: ")
     end,
   },
 }

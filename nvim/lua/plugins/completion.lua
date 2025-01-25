@@ -179,9 +179,9 @@ return {
         "solargraph",
         "typescript-language-server",
         "gopls",
-        "golangci-lint", -- Go linter
-        "gofumpt", -- Go formatter
-        "delve", -- Go debugger
+        "golangci-lint",
+        "gofumpt",
+        "delve",
       },
     },
   },
