@@ -77,6 +77,10 @@ keymap.set("n", "<leader>dt", function()
   })
 end, { desc = "Toggle diagnostic virtual text" })
 
+keymap.set("n", "<leader>ds", function()
+  vim.diagnostic.open_float(nil, { focus = false })
+end)
+
 -- Lols
 keymap.set("n", "yc", "yy<cmd>normal gcc<CR>p", { desc = "Duplicate a line and comment out the first line" })
 keymap.set("n", "<C-c>", "ciw", { desc = "Change word" })
@@ -90,3 +94,26 @@ keymap.set("n", "<leader>wq", "<cmd>w<CR><cmd>bd<CR>", { desc = "Save and close 
 -- Yank entire buffer
 keymap.set("n", "<leader>ya", "<cmd>%y+<CR>", { silent = true, desc = "Yank entire buffer to system clipboard" })
 keymap.set("n", "<leader>yA", "<cmd>%y<CR>", { silent = true, desc = "Yank entire buffer to unnamed register" })
+
+-- Obsidian
+keymap.set({"n", "v"}, "<leader>on", function()
+  -- If in visual mode, proceed with selection
+  if vim.fn.mode() == "v" or vim.fn.mode() == "V" then
+    local title = vim.fn.input("Title (optional): ")
+    if title == "" then
+      vim.cmd("ObsidianLinkNew")
+    else
+      vim.cmd("ObsidianLinkNew " .. title)
+    end
+  else
+    -- If in normal mode, select word under cursor
+    local title = vim.fn.input("Title (optional): ")
+    if title == "" then
+      vim.cmd("normal! viw") 
+      vim.cmd("ObsidianLinkNew")
+    else
+      vim.cmd("normal! viw")
+      vim.cmd("ObsidianLinkNew " .. title)
+    end
+  end
+end, { desc = "Create and link new note" })
