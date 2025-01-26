@@ -34,6 +34,42 @@ local function get_markdown_files(custom_path)
   return files
 end
 
+-- Function to prompt for directory and open a random note
+function M.prompt_and_open_random_note()
+  -- Start at the vault root for the directory selection
+  local vault_root = vim.fn.expand("~/Documents/vault")
+
+  -- Use vim.ui.input for a nicer input experience
+  vim.ui.input({
+    prompt = "Enter directory path (relative to vault): ",
+    default = "", -- Start with empty input
+    completion = "dir", -- Enable directory completion
+  }, function(input)
+    -- Handle cancelled input
+    if input == nil then
+      return
+    end
+
+    -- If input is empty, use default vault path
+    if input == "" then
+      M.open_random_note({ args = "" })
+      return
+    end
+
+    -- Construct full path
+    local full_path = vim.fn.resolve(vault_root .. "/" .. input)
+
+    -- Verify the directory exists
+    if vim.fn.isdirectory(full_path) == 0 then
+      vim.notify("Directory not found: " .. full_path, vim.log.levels.ERROR)
+      return
+    end
+
+    -- Open random note from the specified directory
+    M.open_random_note({ args = full_path })
+  end)
+end
+
 function M.open_random_note(args)
   local path
   if args and args.args and args.args ~= "" then
@@ -76,6 +112,15 @@ function M.setup(opts)
     noremap = true,
     silent = true,
     desc = "Open random note from vault",
+  })
+
+  -- Create keymap for directory prompt
+  vim.keymap.set("n", "<leader>r", function()
+    M.prompt_and_open_random_note()
+  end, {
+    noremap = true,
+    silent = true,
+    desc = "Prompt for directory and open random note",
   })
 end
 
