@@ -11,6 +11,41 @@ M.config = {
   },
 }
 
+-- Function to get all directories in the vault
+local function get_vault_directories()
+  local vault_root = vim.fn.expand("~/Documents/vault")
+  local directories = {}
+
+  -- Get all directories using fd if available (faster) or find
+  local cmd = vim.fn.executable("fd") == 1 and string.format("fd . %s --type d", vim.fn.shellescape(vault_root))
+    or string.format("find %s -type d", vim.fn.shellescape(vault_root))
+
+  local handle = io.popen(cmd)
+  if handle then
+    for dir in handle:lines() do
+      -- Skip directories that match exclude patterns
+      local exclude = false
+      for _, pattern in ipairs(M.config.exclude_patterns) do
+        if dir:match(pattern) then
+          exclude = true
+          break
+        end
+      end
+
+      if not exclude then
+        -- Make path relative to vault root
+        local relative_path = dir:sub(#vault_root + 2)
+        if relative_path ~= "" then
+          table.insert(directories, relative_path)
+        end
+      end
+    end
+    handle:close()
+  end
+
+  return directories
+end
+
 local function get_markdown_files(custom_path)
   local search_path = custom_path or M.config.vault_path
   local files = {}
@@ -34,40 +69,56 @@ local function get_markdown_files(custom_path)
   return files
 end
 
--- Function to prompt for directory and open a random note
-function M.prompt_and_open_random_note()
-  -- Start at the vault root for the directory selection
+-- Function to prompt for directory using Telescope
+function M.prompt_directory_telescope()
+  local telescope = require("telescope.builtin")
+  local actions = require("telescope.actions")
+  local action_state = require("telescope.actions.state")
   local vault_root = vim.fn.expand("~/Documents/vault")
 
-  -- Use vim.ui.input for a nicer input experience
-  vim.ui.input({
-    prompt = "Enter directory path (relative to vault): ",
-    default = "", -- Start with empty input
-    completion = "dir", -- Enable directory completion
-  }, function(input)
-    -- Handle cancelled input
-    if input == nil then
-      return
-    end
+  -- Create a custom telescope picker
+  local opts = {
+    prompt_title = "Select Directory for Random Note",
+    results_title = "Vault Directories",
+    layout_config = {
+      width = 0.8,
+      height = 0.6,
+    },
+    finder = require("telescope.finders").new_table({
+      results = get_vault_directories(),
+      entry_maker = function(entry)
+        return {
+          value = entry,
+          display = entry,
+          ordinal = entry,
+        }
+      end,
+    }),
+    sorter = require("telescope.sorters").get_generic_fuzzy_sorter(),
+    attach_mappings = function(prompt_bufnr, map)
+      -- Override selection behavior
+      actions.select_default:replace(function()
+        actions.close(prompt_bufnr)
+        local selection = action_state.get_selected_entry()
 
-    -- If input is empty, use default vault path
-    if input == "" then
-      M.open_random_note({ args = "" })
-      return
-    end
+        if selection then
+          local full_path = vim.fn.resolve(vault_root .. "/" .. selection.value)
+          M.open_random_note({ args = full_path })
+        end
+      end)
 
-    -- Construct full path
-    local full_path = vim.fn.resolve(vault_root .. "/" .. input)
+      -- Add custom mapping for opening in default directory
+      map("i", "<C-d>", function()
+        actions.close(prompt_bufnr)
+        M.open_random_note({ args = "" })
+      end)
 
-    -- Verify the directory exists
-    if vim.fn.isdirectory(full_path) == 0 then
-      vim.notify("Directory not found: " .. full_path, vim.log.levels.ERROR)
-      return
-    end
+      return true
+    end,
+  }
 
-    -- Open random note from the specified directory
-    M.open_random_note({ args = full_path })
-  end)
+  -- Open the picker
+  require("telescope.pickers").new(opts):find()
 end
 
 function M.open_random_note(args)
@@ -97,6 +148,7 @@ function M.setup(opts)
     M.config = vim.tbl_deep_extend("force", M.config, opts)
   end
 
+  -- Create the basic command
   vim.api.nvim_create_user_command("RandomNote", function(args)
     M.open_random_note(args)
   end, {
@@ -105,7 +157,7 @@ function M.setup(opts)
     desc = "Open random note from vault or specified directory",
   })
 
-  -- Create keymap for default vault path
+  -- Keymap for default vault path
   vim.keymap.set("n", "<leader>R", function()
     M.open_random_note({ args = "" })
   end, {
@@ -114,13 +166,13 @@ function M.setup(opts)
     desc = "Open random note from vault",
   })
 
-  -- Create keymap for directory prompt
+  -- Keymap for directory selection with Telescope
   vim.keymap.set("n", "<leader>r", function()
-    M.prompt_and_open_random_note()
+    M.prompt_directory_telescope()
   end, {
     noremap = true,
     silent = true,
-    desc = "Prompt for directory and open random note",
+    desc = "Select directory and open random note",
   })
 end
 
