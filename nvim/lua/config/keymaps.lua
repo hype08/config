@@ -117,3 +117,6 @@ keymap.set({"n", "v"}, "<leader>on", function()
     end
   end
 end, { desc = "Create and link new note" })
+
+-- Add ObsidianExtract command to visual mode only, since it requires selection
+keymap.set("v", "<leader>oe", "<cmd>ObsidianExtract<CR>", { desc = "Extract selection to new note" })
