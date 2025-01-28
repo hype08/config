@@ -3,4 +3,3 @@ require("config.lazy")
 
 -- Load custom modules
 require("custom.random-notes").setup()
-require("custom.obsidian-utils").setup()
