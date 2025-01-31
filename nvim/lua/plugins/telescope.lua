@@ -83,28 +83,25 @@ return {
 
     local keymap = vim.keymap
 
-    keymap.set("n", "<leader>fd", function()
+    keymap.set("n", "<C-p>", function()
+      require("telescope.builtin").git_files({ cache_picker = false })
+    end, { desc = "Find git files" })
+
+    keymap.set("n", "<leader>/", function()
+      require("telescope.builtin").live_grep({ cache_picker = false })
+    end, { desc = "Live grep" })
+
+    keymap.set("n", "<leader>ff", function()
       require("telescope.builtin").find_files({ cache_picker = false })
     end, { desc = "Find files in cwd" })
-    keymap.set("n", "<leader>fr", "<cmd>Telescope oldfiles cwd_only=true<cr>", { desc = "Fuzzy find recent files" })
-    -- keymap.set("n", "<leader>fs", "<cmd>Telescope live_grep<cr>", { desc = "Find string in cwd" })
-    keymap.set("n", "<leader>fa", "<cmd>Telescope grep_string<cr>", { desc = "Find string under cursor in cwd" })
-    keymap.set("n", "<leader>fw", function()
-      require("telescope.builtin").live_grep({ cache_picker = false })
-    end, { desc = "Find word in cwd" })
 
-    -- Modified to have both ff and fg for git files
-    keymap.set("n", "<leader>ff", function()
-      require("telescope.builtin").git_files({
-        cache_picker = false,
-      })
-    end, { desc = "Find git files (with multi-select)" })
-
+    keymap.set("n", "<leader>fh", "<cmd>Telescope oldfiles cwd_only=true<cr>", { desc = "File history" })
+    keymap.set("n", "<leader>fa", "<cmd>Telescope grep_string<cr>", { desc = "Find string under cursor" })
     keymap.set("n", "<leader>fg", function()
-      require("telescope.builtin").git_files({
-        cache_picker = false,
-      })
-    end, { desc = "Find git files (with multi-select)" })
+      require("telescope.builtin").live_grep({ cache_picker = false })
+    end, { desc = "Live grep in cwd" })
+
+    keymap.set("n", "<leader>fb", "<cmd>Telescope buffers<cr>", { desc = "Find buffers" })
 
     require("config.telescope.live_multigrep").setup()
   end,
