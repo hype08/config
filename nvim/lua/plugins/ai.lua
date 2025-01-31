@@ -6,6 +6,9 @@ return {
     require("gp").setup({
       openai_api_key = os.getenv("OPENAI_API_KEY"),
       providers = {
+        lmstudio = {
+          endpoint = "http://localhost:1234/v1/chat/completions",
+        },
         anthropic = {
           endpoint = "https://api.anthropic.com/v1/messages",
           secret = os.getenv("ANTHROPIC_API_KEY"),
@@ -57,6 +60,19 @@ return {
         rec_cmd = nil,
       },
       agents = {
+        {
+          name = "LMStudio",
+          chat = true,
+          command = true,
+          provider = "lmstudio",
+          -- Adjust the model name based on what you're running in LM Studio
+          model = { model = "local-model", temperature = 0.7, top_p = 1 },
+          system_prompt = "You are a helpful AI assistant.\n"
+            .. "- Provide clear and concise responses\n"
+            .. "- If unsure, admit it rather than guess\n"
+            .. "- Think step by step when solving problems\n"
+            .. "- Include complete code when programming\n",
+        },
         {
           name = "Qwen2.5:32b",
           chat = true,
