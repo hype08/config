@@ -73,7 +73,7 @@ return {
 
     vim.keymap.set("n", "-", require("oil").open, { desc = "Open parent directory" })
 
-    vim.keymap.set("n", "<leader>E", function()
+    vim.keymap.set("n", "<leader>fv", function()
       local oil = require("oil")
       vim.cmd("vsplit")
       vim.cmd("wincmd h")
@@ -82,12 +82,8 @@ return {
       vim.cmd("vertical resize " .. math.max(20, math.min(60, width)))
     end, { desc = "Open oil in vertical split" })
 
-    vim.keymap.set("n", "<leader>e", function()
+    vim.keymap.set("n", "<leader>fe", function()
       require("oil").open_float()
     end, { desc = "Open oil in floating window" })
-
-    vim.keymap.set("n", "<leader>o", function()
-      require("oil").toggle_float()
-    end, { desc = "Toggle oil view" })
   end,
 }
