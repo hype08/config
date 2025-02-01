@@ -13,52 +13,52 @@ return {
           endpoint = "https://api.anthropic.com/v1/messages",
           secret = os.getenv("ANTHROPIC_API_KEY"),
         },
-        copilot = {
-          endpoint = "https://api.githubcopilot.com/chat/completions",
-          secret = {
-            "bash",
-            "-c",
-            "cat ~/.config/github-copilot/hosts.json | sed -e 's/.*oauth_token...//;s/\".*//'",
-          },
-        },
-        ollama = {
-          endpoint = "http://localhost:11434/v1/chat/completions",
-        },
-        openai = {
-          endpoint = "https://api.openai.com/v1/chat/completions",
-          secret = vim.fn.getenv("OPENAI_API_KEY"),
-        },
+        -- copilot = {
+        --   endpoint = "https://api.githubcopilot.com/chat/completions",
+        --   secret = {
+        --     "bash",
+        --     "-c",
+        --     "cat ~/.config/github-copilot/hosts.json | sed -e 's/.*oauth_token...//;s/\".*//'",
+        --   },
+        -- },
+        -- ollama = {
+        --   endpoint = "http://localhost:11434/v1/chat/completions",
+        -- },
+        -- openai = {
+        --   endpoint = "https://api.openai.com/v1/chat/completions",
+        --   secret = vim.fn.getenv("OPENAI_API_KEY"),
+        -- },
       },
-      whisper = {
-        -- you can disable whisper completely by whisper = {disable = true}
-        disable = false,
-
-        -- OpenAI audio/transcriptions api endpoint to transcribe audio to text
-        endpoint = "https://api.openai.com/v1/audio/transcriptions",
-        -- directory for storing whisper files
-        store_dir = (os.getenv("TMPDIR") or os.getenv("TEMP") or "/tmp") .. "/gp_whisper",
-        -- multiplier of RMS level dB for threshold used by sox to detect silence vs speech
-        -- decibels are negative, the recording is normalized to -3dB =>
-        -- increase this number to pick up more (weaker) sounds as possible speech
-        -- decrease this number to pick up only louder sounds as possible speech
-        -- you can disable silence trimming by setting this a very high number (like 1000.0)
-        silence = "1.75",
-        -- whisper tempo (1.0 is normal speed)
-        tempo = "1.75",
-        -- The language of the input audio, in ISO-639-1 format.
-        language = "en",
-        -- command to use for recording can be nil (unset) for automatic selection
-        -- string ("sox", "arecord", "ffmpeg") or table with command and arguments:
-        -- sox is the most universal, but can have start/end cropping issues caused by latency
-        -- arecord is linux only, but has no cropping issues and is faster
-        -- ffmpeg in the default configuration is macos only, but can be used on any platform
-        -- (see https://trac.ffmpeg.org/wiki/Capture/Desktop for more info)
-        -- below is the default configuration for all three commands:
-        -- whisper_rec_cmd = {"sox", "-c", "1", "--buffer", "32", "-d", "rec.wav", "trim", "0", "60:00"},
-        -- whisper_rec_cmd = {"arecord", "-c", "1", "-f", "S16_LE", "-r", "48000", "-d", "3600", "rec.wav"},
-        -- whisper_rec_cmd = {"ffmpeg", "-y", "-f", "avfoundation", "-i", ":0", "-t", "3600", "rec.wav"},
-        rec_cmd = nil,
-      },
+      -- whisper = {
+      --   -- you can disable whisper completely by whisper = {disable = true}
+      --   disable = false,
+      --
+      --   -- OpenAI audio/transcriptions api endpoint to transcribe audio to text
+      --   endpoint = "https://api.openai.com/v1/audio/transcriptions",
+      --   -- directory for storing whisper files
+      --   store_dir = (os.getenv("TMPDIR") or os.getenv("TEMP") or "/tmp") .. "/gp_whisper",
+      --   -- multiplier of RMS level dB for threshold used by sox to detect silence vs speech
+      --   -- decibels are negative, the recording is normalized to -3dB =>
+      --   -- increase this number to pick up more (weaker) sounds as possible speech
+      --   -- decrease this number to pick up only louder sounds as possible speech
+      --   -- you can disable silence trimming by setting this a very high number (like 1000.0)
+      --   silence = "1.75",
+      --   -- whisper tempo (1.0 is normal speed)
+      --   tempo = "1.75",
+      --   -- The language of the input audio, in ISO-639-1 format.
+      --   language = "en",
+      --   -- command to use for recording can be nil (unset) for automatic selection
+      --   -- string ("sox", "arecord", "ffmpeg") or table with command and arguments:
+      --   -- sox is the most universal, but can have start/end cropping issues caused by latency
+      --   -- arecord is linux only, but has no cropping issues and is faster
+      --   -- ffmpeg in the default configuration is macos only, but can be used on any platform
+      --   -- (see https://trac.ffmpeg.org/wiki/Capture/Desktop for more info)
+      --   -- below is the default configuration for all three commands:
+      --   -- whisper_rec_cmd = {"sox", "-c", "1", "--buffer", "32", "-d", "rec.wav", "trim", "0", "60:00"},
+      --   -- whisper_rec_cmd = {"arecord", "-c", "1", "-f", "S16_LE", "-r", "48000", "-d", "3600", "rec.wav"},
+      --   -- whisper_rec_cmd = {"ffmpeg", "-y", "-f", "avfoundation", "-i", ":0", "-t", "3600", "rec.wav"},
+      --   rec_cmd = nil,
+      -- },
       agents = {
         {
           name = "LMStudio",
@@ -67,66 +67,69 @@ return {
           provider = "lmstudio",
           -- Adjust the model name based on what you're running in LM Studio
           model = { model = "local-model", temperature = 0.7, top_p = 1 },
-          system_prompt = "You are a helpful AI assistant.\n"
+          system_prompt = "I am an AI meticulously crafted to provide programming guidance and code assistance."
             .. "- Provide clear and concise responses\n"
             .. "- If unsure, admit it rather than guess\n"
             .. "- Think step by step when solving problems\n"
-            .. "- Include complete code when programming\n",
-        },
-        {
-          name = "Qwen2.5:32b",
-          chat = true,
-          command = true,
-          provider = "ollama",
-          model = { model = "qwen2.5:32b" },
-          system_prompt = "I am an AI meticulously crafted to provide programming guidance and code assistance. "
-            .. "To best serve you as a computer programmer, please provide detailed inquiries and code snippets when necessary, "
-            .. "and expect precise, technical responses tailored to your development needs.\n",
-        },
-        {
-          name = "Codellama",
-          chat = true,
-          command = true,
-          provider = "ollama",
-          model = { model = "codellama" },
-          system_prompt = "I am an AI meticulously crafted to provide programming guidance and code assistance. "
-            .. "To best serve you as a computer programmer, please provide detailed inquiries and code snippets when necessary, "
-            .. "and expect precise, technical responses tailored to your development needs.\n",
-        },
-        {
-          name = "ChatGPT4",
-          chat = true,
-          command = false,
-          -- string with model name or table with model name and parameters
-          model = { model = "gpt-4-1106-preview", temperature = 1.1, top_p = 1 },
-          -- system prompt (use this to specify the persona/role of the AI)
-          system_prompt = "You are a general AI assistant.\n\n"
-            .. "The user provided the additional info about how they would like you to respond:\n\n"
-            .. "- If you're unsure don't guess and say you don't know instead.\n"
-            .. "- Ask question if you need clarification to provide better answer.\n"
-            .. "- Think deeply and carefully from first principles step by step.\n"
+            .. "- Include complete code when programming, inside backticks and language. e.g. /`/`/`ruby \n"
             .. "- Zoom out first to see the big picture and then zoom in to details.\n"
             .. "- Use Socratic method to improve your thinking and coding skills.\n"
-            .. "- Don't elide any code from your output if the answer requires coding.\n"
-            .. "- Take a deep breath; You've got this!\n",
+            .. "- Don't elide any code from your output if the answer requires coding.\n",
         },
+        -- {
+        --   name = "Qwen2.5:32b",
+        --   chat = true,
+        --   command = true,
+        --   provider = "ollama",
+        --   model = { model = "qwen2.5:32b" },
+        --   system_prompt = "I am an AI meticulously crafted to provide programming guidance and code assistance. "
+        --     .. "To best serve you as a computer programmer, please provide detailed inquiries and code snippets when necessary, "
+        --     .. "and expect precise, technical responses tailored to your development needs.\n",
+        -- },
+        -- {
+        --   name = "Codellama",
+        --   chat = true,
+        --   command = true,
+        --   provider = "ollama",
+        --   model = { model = "codellama" },
+        --   system_prompt = "I am an AI meticulously crafted to provide programming guidance and code assistance. "
+        --     .. "To best serve you as a computer programmer, please provide detailed inquiries and code snippets when necessary, "
+        --     .. "and expect precise, technical responses tailored to your development needs.\n",
+        -- },
+        -- {
+        --   name = "ChatGPT4",
+        --   chat = true,
+        --   command = false,
+        --   -- string with model name or table with model name and parameters
+        --   model = { model = "gpt-4-1106-preview", temperature = 1.1, top_p = 1 },
+        --   -- system prompt (use this to specify the persona/role of the AI)
+        --   system_prompt = "You are a general AI assistant.\n\n"
+        --     .. "The user provided the additional info about how they would like you to respond:\n\n"
+        --     .. "- If you're unsure don't guess and say you don't know instead.\n"
+        --     .. "- Ask question if you need clarification to provide better answer.\n"
+        --     .. "- Think deeply and carefully from first principles step by step.\n"
+        --     .. "- Zoom out first to see the big picture and then zoom in to details.\n"
+        --     .. "- Use Socratic method to improve your thinking and coding skills.\n"
+        --     .. "- Don't elide any code from your output if the answer requires coding.\n"
+        --     .. "- Take a deep breath; You've got this!\n",
+        -- },
+        -- {
+        --   name = "CodeGPT4",
+        --   chat = false,
+        --   command = true,
+        --   -- string with model name or table with model name and parameters
+        --   model = { model = "gpt-4-1106-preview", temperature = 0.8, top_p = 1 },
+        --   -- system prompt (use this to specify the persona/role of the AI)
+        --   system_prompt = "You are an AI working as a code editor.\n\n"
+        --     .. "Please AVOID COMMENTARY OUTSIDE OF THE SNIPPET RESPONSE.\n"
+        --     .. "START AND END YOUR ANSWER WITH:\n\n```",
+        -- },
         {
-          name = "CodeGPT4",
-          chat = false,
-          command = true,
-          -- string with model name or table with model name and parameters
-          model = { model = "gpt-4-1106-preview", temperature = 0.8, top_p = 1 },
-          -- system prompt (use this to specify the persona/role of the AI)
-          system_prompt = "You are an AI working as a code editor.\n\n"
-            .. "Please AVOID COMMENTARY OUTSIDE OF THE SNIPPET RESPONSE.\n"
-            .. "START AND END YOUR ANSWER WITH:\n\n```",
-        },
-        {
-          name = "Claude3Haiku",
+          name = "ChatClaude-3-5-Sonnet",
           chat = true,
           command = true,
           provider = "anthropic",
-          model = { model = "claude-3-haiku-20240307" },
+          model = { model = "claude-3-5-sonnet-20241022" },
           system_prompt = "You are a general AI assistant.\n\n"
             .. "The user provided the additional info about how they would like you to respond:\n\n"
             .. "- If you're unsure don't guess and say you don't know instead.\n"
