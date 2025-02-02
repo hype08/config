@@ -55,12 +55,6 @@ keymap.set(
   { noremap = true, silent = true, desc = "Decrease width of current split by 15" }
 )
 
--- Reset current split to full height
-keymap.set("n", "<leader>sfh", "<cmd>resize<CR>", { desc = "Reset current split to full height" })
-
--- Reset current split to full width
-keymap.set("n", "<leader>sfw", "<cmd>vertical resize<CR>", { desc = "Reset current split to full width" })
-
 -- Tabs
 keymap.set("n", "<leader>to", "<cmd>tabnew<CR>", { desc = "Open new tab" })
 keymap.set("n", "<leader>tx", "<cmd>tabclose<CR>", { desc = "Close current tab" })
@@ -96,7 +90,7 @@ keymap.set("n", "<leader>ya", "<cmd>%y+<CR>", { silent = true, desc = "Yank enti
 keymap.set("n", "<leader>yA", "<cmd>%y<CR>", { silent = true, desc = "Yank entire buffer to unnamed register" })
 
 -- Obsidian
-keymap.set({"n", "v"}, "<leader>on", function()
+keymap.set({ "n", "v" }, "<leader>on", function()
   -- If in visual mode, proceed with selection
   if vim.fn.mode() == "v" or vim.fn.mode() == "V" then
     local title = vim.fn.input("Title (optional): ")
@@ -109,7 +103,7 @@ keymap.set({"n", "v"}, "<leader>on", function()
     -- If in normal mode, select word under cursor
     local title = vim.fn.input("Title (optional): ")
     if title == "" then
-      vim.cmd("normal! viw") 
+      vim.cmd("normal! viw")
       vim.cmd("ObsidianLinkNew")
     else
       vim.cmd("normal! viw")
