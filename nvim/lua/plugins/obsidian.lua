@@ -153,7 +153,7 @@ return {
     { "<leader>or", "<cmd>ObsidianRename<cr>", desc = "Rename note" },
     { "<leader>ow", "<cmd>ObsidianWorkspace<cr>", desc = "Switch workspace" },
     { "<leader>ox", "<cmd>ObsidianToggleCheckbox<cr>", desc = "Toggle checkbox" },
-    { "<leader>oh", create_thought_window, desc = "Quick capture note" }, -- Added new keybinding
+    { "<leader>oh", create_thought_window, desc = "Quick capture note" },
   },
   opts = {
     workspaces = {

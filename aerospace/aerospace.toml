@@ -136,6 +136,7 @@ cmd-ctrl-alt-shift-6 = 'move-node-to-workspace 6'
 cmd-ctrl-alt-shift-7 = 'move-node-to-workspace 7'
 cmd-ctrl-alt-shift-8 = 'move-node-to-workspace 8'
 cmd-ctrl-alt-shift-9 = 'move-node-to-workspace 9'
+cmd-ctrl-alt-shift-a = 'move-node-to-workspace A' # for AI
 cmd-ctrl-alt-shift-c = 'move-node-to-workspace C' # for Browser
 cmd-ctrl-alt-shift-d = 'move-node-to-workspace D' # for Docker
 cmd-ctrl-alt-shift-e = 'move-node-to-workspace E' # for File Explorer (Finder)
@@ -147,7 +148,6 @@ cmd-ctrl-alt-shift-t = 'move-node-to-workspace T' # for Terminal
 cmd-ctrl-alt-shift-v = 'move-node-to-workspace V' # for Video Editing
 cmd-ctrl-alt-shift-w = 'move-node-to-workspace W' # for WhatsApp/Line
 cmd-ctrl-alt-shift-z = 'move-node-to-workspace Z' # for VideoConferencing
-
 # See: https://nikitabobko.github.io/AeroSpace/commands#workspace-back-and-forth
 alt-tab = 'workspace-back-and-forth'
 # See: https://nikitabobko.github.io/AeroSpace/commands#move-workspace-to-monitor
@@ -171,13 +171,21 @@ alt-shift-k = ['join-with up', 'mode main']
 alt-shift-l = ['join-with right', 'mode main']
 
 [[on-window-detected]]
+if.app-id = 'com.anthropic.claudefordesktop'
+run = "move-node-to-workspace 1"
+
+[[on-window-detected]]
+if.app-id = 'com.google.Chrome'
+run = "move-node-to-workspace 3"
+
+[[on-window-detected]]
 if.app-id = 'com.tinyapp.TablePlus-setapp'
-run = "move-node-to-workspace 7"
+run = "move-node-to-workspace 4"
 
 [[on-window-detected]]
 if.app-id = 'io.httpie.desktop'
-run = "move-node-to-workspace 8"
-
+run = "move-node-to-workspace 5"
+  
 [[on-window-detected]]
 if.app-id = 'com.brave.Browser'
 run = "move-node-to-workspace C"
