@@ -63,7 +63,6 @@ keymap.set("n", "<leader>tp", "<cmd>tabp<CR>", { desc = "Go to previous tab" })
 keymap.set("n", "<leader>tf", "<cmd>tabnew<CR>", { desc = "Open current buffer in new tab" })
 
 -- LSP
-keymap.set("n", "<leader>lr", "<cmd>LspRestart<CR>", { desc = "Restart LSP" })
 keymap.set("n", "<leader>dt", function()
   local current_config = vim.diagnostic.config()
   vim.diagnostic.config({
@@ -73,7 +72,7 @@ end, { desc = "Toggle diagnostic virtual text" })
 
 keymap.set("n", "<leader>ds", function()
   vim.diagnostic.open_float(nil, { focus = false })
-end)
+end, { desc = "Open diagnostic in float" })
 
 -- Lols
 keymap.set("n", "yc", "yy<cmd>normal gcc<CR>p", { desc = "Duplicate a line and comment out the first line" })
