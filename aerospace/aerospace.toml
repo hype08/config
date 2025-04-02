@@ -187,6 +187,10 @@ if.app-id = 'io.httpie.desktop'
 run = "move-node-to-workspace 5"
   
 [[on-window-detected]]
+if.app-id = 'com.blackmagic-design.DaVinciResolve'
+run = "move-node-to-workspace 6"
+
+[[on-window-detected]]
 if.app-id = 'com.brave.Browser'
 run = "move-node-to-workspace C"
 
