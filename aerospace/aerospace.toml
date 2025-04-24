@@ -65,6 +65,9 @@ outer.right =      10
 [mode.main.binding]
 
 alt-shift-f = 'fullscreen'
+# Move focused window to next/previous monitor
+alt-shift-right = 'move-node-to-monitor next'
+alt-shift-left = 'move-node-to-monitor prev'
 
 # All possible keys:
 # - Letters.        a, b, c, ..., z
